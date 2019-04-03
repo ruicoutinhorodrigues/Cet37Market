@@ -28,6 +28,10 @@ namespace Cet37Market.Web
 
             services.AddTransient<SeedDb>();
 
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<ICountryRepository, CountryRepository>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
