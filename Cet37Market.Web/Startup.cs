@@ -38,7 +38,7 @@ namespace Cet37Market.Web
 
             services.AddDbContext<DataContext>(cfg =>
             {
-                cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+                cfg.UseSqlServer(this.Configuration.GetConnectionString("SmartAspConnection"));
             });
 
             services.AddTransient<SeedDb>();

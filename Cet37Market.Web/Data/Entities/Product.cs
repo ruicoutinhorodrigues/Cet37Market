@@ -31,5 +31,18 @@ namespace Cet37Market.Web.Data.Entities
 
         public User User { get; set; }
 
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageUrl))
+                {
+                    return null;
+                }
+
+                return $"http://ruirodrigues-001-site1.etempurl.com{this.ImageUrl.Substring(1)}";
+            }
+        }
+
     }
 }

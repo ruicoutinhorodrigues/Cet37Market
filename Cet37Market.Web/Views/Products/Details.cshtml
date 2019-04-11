@@ -23,7 +23,10 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Url.Content(Model.ImageUrl)" alt="imagem" style="width: 300px; height: 450px; max-width: 100%; height:auto" />
+            }
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ImageUrl)

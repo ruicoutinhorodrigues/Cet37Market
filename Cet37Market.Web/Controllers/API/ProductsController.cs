@@ -20,7 +20,7 @@ namespace Cet37Market.Web.Controllers.API
         [HttpGet]
         public IActionResult GetProducts()
         {
-            return Ok(this.ProductRepository.GetAll());
+            return Ok(this.ProductRepository.GetAllWithUsers());
         }
 
     }
