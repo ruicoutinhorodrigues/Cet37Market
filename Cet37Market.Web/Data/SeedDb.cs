@@ -4,18 +4,19 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Cet37Market.Web.Data.Entities;
+    using Cet37Market.Web.Helpers;
     using Microsoft.AspNetCore.Identity;
 
     public class SeedDb
     {
         public readonly DataContext context;
-        private readonly UserManager<User> userManager;
+        private readonly IUserHelper userHelper;
         private readonly Random random;
 
-        public SeedDb(DataContext context, UserManager<User> userManager)
+        public SeedDb(DataContext context, IUserHelper userHelper)
         {
             this.context = context;
-            this.userManager = userManager;
+            this.userHelper = userHelper;
             this.random = new Random();
         }
 
@@ -23,7 +24,7 @@
         {
             await this.context.Database.EnsureCreatedAsync();
 
-            var user = await this.userManager.FindByEmailAsync("rui.coutinho.rodrigues@gmail.com");
+            var user = await this.userHelper.GetUserByEmailAsync("rui.coutinho.rodrigues@gmail.com");
 
             if (user == null)
             {
@@ -36,7 +37,7 @@
                     PhoneNumber = "962778137"
                 };
 
-                var result = await this.userManager.CreateAsync(user, "lagarto75");
+                var result = await this.userHelper.AddUserAsync(user, "lagarto75");
 
                 if (result != IdentityResult.Success)
                 {

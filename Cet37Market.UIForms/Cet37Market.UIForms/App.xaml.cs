@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cet37Market.UIForms.ViewModels;
+using Cet37Market.UIForms.Views;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +12,9 @@ namespace Cet37Market.UIForms
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainViewModel.GetInstance().Login = new LoginViewModel();
+
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

@@ -1,5 +1,6 @@
 ﻿using Cet37Market.Web.Data;
 using Cet37Market.Web.Data.Entities;
+using Cet37Market.Web.Helpers;
 using Cet37Market.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace Cet37Market.Web.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
+        private readonly IUserHelper userHelper;
 
-        public ProductsController(IProductRepository product)
+        public ProductsController(IProductRepository product, IUserHelper userHelper)
         {
             this.productRepository = product;
+            this.userHelper = userHelper;
         }
 
         // GET: Products
@@ -80,6 +83,8 @@ namespace Cet37Market.Web.Controllers
                 }
 
                 var product = this.ToProduct(view, path);
+
+                product.User = await this.userHelper.GetUserByEmailAsync("rui.coutinho.rodrigues@gmail.com");
 
                 await this.productRepository.CreateAsync(product);
                
@@ -170,6 +175,9 @@ namespace Cet37Market.Web.Controllers
                     }
 
                     var product = this.ToProduct(view, path);
+
+                    product.User = await this.userHelper.GetUserByEmailAsync("rui.coutinho.rodrigues@gmail.com");
+
 
                     await this.productRepository.UpdateAsync(product);
 

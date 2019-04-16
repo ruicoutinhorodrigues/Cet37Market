@@ -1,5 +1,6 @@
 ﻿using Cet37Market.Web.Data;
 using Cet37Market.Web.Data.Entities;
+using Cet37Market.Web.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -44,6 +45,8 @@ namespace Cet37Market.Web
             services.AddTransient<SeedDb>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<IUserHelper, UserHelper>();
 
             services.AddScoped<ICountryRepository, CountryRepository>();
 
