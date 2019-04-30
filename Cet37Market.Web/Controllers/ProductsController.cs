@@ -2,6 +2,7 @@
 using Cet37Market.Web.Data.Entities;
 using Cet37Market.Web.Helpers;
 using Cet37Market.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Cet37Market.Web.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
@@ -23,6 +25,7 @@ namespace Cet37Market.Web.Controllers
         }
 
         // GET: Products
+  
         public IActionResult Index()
         {
             return View(this.productRepository.GetAll());
@@ -46,6 +49,7 @@ namespace Cet37Market.Web.Controllers
         }
 
         // GET: Products/Create
+
         public IActionResult Create()
         {
             return View();
@@ -84,7 +88,7 @@ namespace Cet37Market.Web.Controllers
 
                 var product = this.ToProduct(view, path);
 
-                product.User = await this.userHelper.GetUserByEmailAsync("rui.coutinho.rodrigues@gmail.com");
+                product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
 
                 await this.productRepository.CreateAsync(product);
                
@@ -110,6 +114,7 @@ namespace Cet37Market.Web.Controllers
         }
 
         // GET: Products/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             var product = await this.productRepository.GetByIdAsync(id.Value);
@@ -176,7 +181,7 @@ namespace Cet37Market.Web.Controllers
 
                     var product = this.ToProduct(view, path);
 
-                    product.User = await this.userHelper.GetUserByEmailAsync("rui.coutinho.rodrigues@gmail.com");
+                    product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
 
 
                     await this.productRepository.UpdateAsync(product);
@@ -199,6 +204,7 @@ namespace Cet37Market.Web.Controllers
         }
 
         // GET: Products/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

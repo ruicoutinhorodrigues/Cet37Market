@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Cet37Market.Web
 {
@@ -35,6 +37,19 @@ namespace Cet37Market.Web
                 cfg.Password.RequiredLength = 6;
             })
             .AddEntityFrameworkStores<DataContext>();
+
+            services.AddAuthentication()
+               .AddCookie()
+               .AddJwtBearer(cfg =>
+               {
+                   cfg.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidIssuer = this.Configuration["Tokens:Issuer"],
+                       ValidAudience = this.Configuration["Tokens:Audience"],
+                       IssuerSigningKey = new SymmetricSecurityKey(
+                           Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                   };
+               });
 
 
             services.AddDbContext<DataContext>(cfg =>
@@ -76,6 +91,7 @@ namespace Cet37Market.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

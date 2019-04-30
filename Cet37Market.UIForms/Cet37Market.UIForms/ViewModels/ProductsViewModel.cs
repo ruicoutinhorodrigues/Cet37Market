@@ -17,6 +17,8 @@ namespace Cet37Market.UIForms.ViewModels
 
         private ObservableCollection<Product> products;
 
+        private bool isRefreshing;
+
         #endregion
 
         #region Events
@@ -44,6 +46,22 @@ namespace Cet37Market.UIForms.ViewModels
             }
         }
 
+        public bool IsRefreshing
+        {
+            get
+            {
+                return this.isRefreshing;
+            }
+            set
+            {
+                if (this.isRefreshing != value)
+                {
+                    this.isRefreshing = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRefreshing"));
+                }
+            }
+        }
+
         #endregion
 
 
@@ -55,11 +73,15 @@ namespace Cet37Market.UIForms.ViewModels
 
         private async void LoadProducts()
         {
+            this.IsRefreshing = true;
+
             var response = await this.apiService.GetListAsync<Product>(
                 "http://ruirodrigues-001-site1.etempurl.com",
                 "/api",
                 "/Products"
                 );
+
+            this.IsRefreshing = false;
 
             if (!response.IsSuccess)
             {
