@@ -134,4 +134,7 @@
       <Name>Cet37Market.UIForms</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Logo-market.png" />
+  </ItemGroup>
 </Project>

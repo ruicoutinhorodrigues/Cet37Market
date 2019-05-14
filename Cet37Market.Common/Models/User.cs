@@ -41,7 +41,7 @@ namespace Cet37Market.Common.Models
         public Guid ConcurrencyStamp { get; set; }
 
         [JsonProperty("phoneNumber")]
-        public long PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [JsonProperty("phoneNumberConfirmed")]
         public bool PhoneNumberConfirmed { get; set; }
